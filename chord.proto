@@ -1,0 +1,131 @@
+syntax = "proto3";
+
+service ChordService {
+    rpc Register (RegisterRequest) returns (RegisterResponse) {}
+    rpc Deregister (DeregisterRequest) returns (DeregisterResponse) {}
+    rpc PopulateFingerTable (PopulateFingerTableRequest) returns (PopulateFingerTableResponse) {}
+    rpc GetChordInfo (GetChordInfoRequest) returns (GetChordInfoResponse) {}
+
+    rpc GetFingerTable (GetFingerTableRequest) returns (GetFingerTableResponse) {}
+    rpc GetID (GetIDRequest) returns (GetIDResponse) {}
+    rpc Save (SaveRequest) returns (SaveResponse) {}
+    rpc Remove (RemoveRequest) returns (RemoveResponse) {}
+    rpc Find (FindRequest) returns (FindResponse) {}
+
+    rpc GetKeys (GetKeysRequest) returns (GetKeysResponse) {}
+    rpc RemoveOwnKeys (RemoveOwnKeysRequest) returns (RemoveOwnKeysResponse) {}
+    rpc PromptUpdate (PromptUpdateRequest) returns (PromptUpdateResponse) {}
+
+    rpc GetSelfType (GetSelfTypeRequest) returns (GetSelfTypeResponse) {}
+}
+
+message RegisterRequest {
+    string ip_address = 1;
+    int32 port_number = 2;
+}
+
+message RegisterResponse {
+    int32 node_id = 1;
+    int32 m = 2;
+    string error_message = 3;
+}
+
+message DeregisterRequest {
+    int32 node_id = 1;
+}
+
+message DeregisterResponse {
+    bool successful = 1;
+    string message = 2;
+}
+
+message PopulateFingerTableRequest {
+    int32 node_id = 1;
+}
+
+message IDStringPair {
+    int32 node_id = 1;
+    string ip_addr_port_num = 2;
+}
+
+message PopulateFingerTableResponse {
+    IDStringPair predecessor = 1;
+    repeated IDStringPair finger_table = 2;
+}
+
+message GetChordInfoRequest {}
+
+message GetChordInfoResponse {
+    repeated IDStringPair chord_ring = 1;
+}
+
+message GetFingerTableRequest {}
+
+message GetFingerTableResponse {
+    repeated IDStringPair finger_table = 1;
+}
+
+message SaveRequest {
+    string key = 1;
+    string text = 2;
+}
+
+message SaveResponse {
+    bool successful = 1;
+    int32 node_id = 2;
+    string error_message = 3;
+}
+
+message RemoveRequest {
+    string key = 1;
+}
+
+message RemoveResponse {
+    bool successful = 1;
+    int32 node_id = 2;
+    string error_message = 3;
+}
+
+message FindRequest {
+    string key = 1;
+}
+
+message FindResponse {
+    bool successful = 1;
+    int32 node_id = 2;
+    string ip_addr_port_num = 3;
+    string error_message = 4;
+}
+
+message KeyValuePair {
+    string key = 1;
+    string value = 2;
+}
+
+message GetKeysRequest {}
+
+message GetKeysResponse {
+    repeated KeyValuePair keys = 1; 
+}
+
+message RemoveOwnKeysRequest {
+    repeated int32 keys = 1;
+}
+
+message RemoveOwnKeysResponse {}
+
+message GetSelfTypeRequest {}
+
+message GetSelfTypeResponse {
+    string type = 1;
+}
+
+message GetIDRequest {}
+
+message GetIDResponse {
+    int32 id = 1;
+}
+
+message PromptUpdateRequest {}
+
+message PromptUpdateResponse {}
